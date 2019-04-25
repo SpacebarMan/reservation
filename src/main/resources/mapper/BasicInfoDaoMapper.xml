@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxf.dao.BasicInfoDaoMapper">
+
+  <select id="upDeptInfoTopService" resultType="com.cxf.entity.DeptInfoTop">
+    select * from upDeptInfoTopService order by deptcode
+  </select>
+
+  <select id="upDeptInfoTwoService" resultType="com.cxf.entity.DeptInfoTwo">
+    select * from upDeptInfoTwoService order by deptcode
+  </select>
+
+  <select id="upDoctInfoService" resultType="com.cxf.entity.DoctInfo">
+    select * from upDoctInfoService
+  </select>
+
+  <select id="upOutPatInfoService" resultType="com.cxf.entity.OutPatInfo">
+    select * from upOutPatInfoService
+  </select>
+
+  <select id="upRuleInfoService" resultType="com.cxf.entity.Rule">
+    select * from upRuleInfoService order by ruleid
+  </select>
+
+  <select id="upStopScheduleInfoService" resultType="com.cxf.entity.StopScheduleInfo">
+    select * from upStopScheduleInfoService
+  </select>
+
+  <select id="upReplaceScheduleInfoService" resultType="com.cxf.entity.ReplaceScheduleInfo">
+    select * from upReplaceScheduleInfoService
+  </select>
+
+  <select id="upOrderStatusService" resultType="com.cxf.entity.OrderStatus">
+    select * from upOrderStatusService
+  </select>
+
+
+</mapper>

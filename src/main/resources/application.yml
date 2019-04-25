@@ -1,0 +1,35 @@
+#cxf的配置信息
+cxf:
+  #配置cxf的地址是以soap开头路径下
+  path: /soap
+#tomcat的配置信息
+server:
+  #端口访问是8090
+  port: 8090
+#mybatis的配置信息
+mybatis:
+  #映射的sql文件是在mapper下面所有的xml
+  mapper-locations: classpath:mapper/*.xml
+#springboot的配置信息
+spring:
+  #配置数据库链接
+  datasource:
+    #链接名字
+    name: reservation
+    #链接的url
+    url: jdbc:sqlserver://12.113.92.10:1433;databaseName=bsrun_jajas
+    #url: jdbc:sqlserver://127.0.0.1:1433;databaseName=mhsqzzxt
+    #链接账号
+    username: sa
+    #链接密码
+    password: ja@server
+    #password: ok
+    #链接的数据源访问方式,是以alibaba的druid方式访问
+    type: com.alibaba.druid.pool.DruidDataSource
+    #sqlserver的jdbc链接驱动
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+
+
+
+

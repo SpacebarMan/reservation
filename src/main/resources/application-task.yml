@@ -1,0 +1,33 @@
+#spring的ThreadPoolTaskExecutor线程池配置
+AsyncConfig:
+  #线程池维护线程的最少数量
+  corePoolSize: 1
+  #线程池维护线程的最大数量
+  maxPoolSize: 20
+  #缓存队列
+  queueCapacity: 10
+  #允许的空闲时间
+  keepAliveSeconds: 200
+#cron表达式
+HisTask:
+  #配置是否启动定任务
+  isStartJob: false
+  #cron表达式
+  upHospitalInfoServiceTaskJob: 0 0 7,10,14,16 * * ?
+  upDeptInfoTopServiceTaskJob: 0 0 7,10,14,16 * * ?
+  upDeptInfoTwoServiceTaskJob: 0 0 7,10,14,16 * * ?
+  upDoctInfoServiceTaskJob: 0 0 7,10,14,16 * * ?
+  upOutPatInfoServiceTaskJob:  0 0 7,10,14,16 * * ?
+  upRuleInfoServiceTaskJob: 0 0 7,10,14,16 * * ?
+  upStopScheduleInfoServiceTaskJob: 0 0 7,10,14,16 * * ?
+  upReplaceScheduleInfoServiceTaskJob: 0 0 7,10,14,16 * * ?
+  upOrderStatusServiceTaskJob: 0 0 7,10,14,16 * * ?
+
+
+
+
+
+
+
+
+

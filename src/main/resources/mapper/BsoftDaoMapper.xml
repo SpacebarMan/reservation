@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxf.dao.BsoftDaoMapper">
+
+
+    <select id="getOrderNumInfoService"
+            resultType="com.cxf.entity.webService.ResponseNumSourceInfo"
+            parameterType="com.cxf.entity.webService.RequestNumSourceInfo">
+      select
+        <if test="orderType == '1'">
+         '102' as orderNumType,'1' as patient_type,
+        </if>
+        <if test="orderType != '1'">
+          '100' as orderNumType,'2' as patient_type,
+        </if>
+        * from getOrderNumInfoService
+        where 1=1
+        and scheduleDate+starttime > getdate()
+        and hosOrgCode = #{hosOrgCode}
+        and oneDeptCode = #{oneDeptCode}
+        and deptCode = #{deptCode}
+        and orderType = #{orderType}
+        and resourceCode = #{resourceCode}
+        and scheduleDate &gt;= #{startTime}
+        and scheduleDate &lt;= #{endTime}
+    </select>
+
+  <select id="queryBridByID"
+          resultType="java.lang.String"
+          parameterType="com.cxf.entity.webService.RequestOrderInfo">
+    SELECT TOP 1 ISNULL(BRID,'') FROM  MS_BRDA  WHERE SFZH=#{mediCardId} OR MZHM=#{mediCardId}
+  </select>
+  
+  
+  <insert id="submitOrderByUserInfoService" parameterType="com.cxf.entity.webService.RequestOrderInfo">
+    <selectKey keyProperty="yyxh" resultType="java.lang.String" order="BEFORE">
+      select isnull(max(yyxh),1)+1 as yyxh from MS_YYGH;
+    </selectKey>
+    insert into MS_YYGH
+      (czry,ghrq,brid,czrq,czsj,ghbz,yyxh,czlx,ysdm,ksdm,
+      yyqd,pbid,hyid,yyhzlx,yyhzbh,mzkh,jzklx,zjlx,cardid,grbm,lxdh,brxb,csrq,
+      lxdz,replaceUserCardType,replaceUserCardId,replaceUserName,ip,mac,yyzcjgdm,outorderid,
+      kssj,jssj,yyptlx,yyptdm,yyqdms,hyly,flag,sxw
+      <if test="replaceUserCardType == 1">
+        ,sfz
+      </if>
+    )
+    values
+      (#{userName},#{numSourceDate},#{brid},(SELECT CONVERT(VARCHAR,GETDATE(),112)),(SELECT REPLACE(CONVERT(VARCHAR,GETDATE(),108), ':', '')),'0',#{yyxh},#{orderType},
+    <if test="orderType == 1 ">
+      #{resourceCode},#{oneDeptCode},
+    </if>
+    <if test="orderType != 1 ">
+      '',#{resourceCode},
+    </if>
+    #{channelCode},#{scheduleId},#{numSourceId},#{patient_type},#{patient_id},
+    #{mediCardId},#{mediCardType},#{userCardType},#{userCardId},#{userName},#{userPhone},#{userSex},#{userBD},
+    #{userContAdd},#{replaceUserCardType},#{replaceUserCardId},#{replaceUserName},#{ipAddr},#{macAddr},#{outHospitalCode},
+    #{outOrderId},#{startTime},#{endTime},#{platformType},#{platformCode},#{channelName},#{numSourceFrom},
+    (select max(flag)+1 from MS_YYGH),
+    (CASE WHEN #{startTime} &lt;= '12:00' THEN '1' ELSE '2' END)
+    <if test="replaceUserCardType == 1">
+      ,#{replaceUserCardId}
+    </if>
+    );
+  </insert>
+
+  <update id="orderCancelInfoService" parameterType="com.cxf.entity.webService.RequestOrderCancelInfo">
+    update MS_YYGH set qxrq=getdate(),cancelReason=#{cancelReason},cancelObj=#{cancelObj},GHBZ='1'
+    where yyxh=#{orderId}
+  </update>
+
+  <select id="getOrderListService"
+          resultType="com.cxf.entity.webService.ResponseOrderList"
+          parameterType="com.cxf.entity.webService.RequestOrderList">
+    select * from getOrderListService
+    where 1=1 and jzklx=#{userCardType} and cardid=#{userCardId}
+    <if test="queryPersonType == 1">
+      and GHBZ not in ('0','1','2')
+    </if>
+    <if test="queryDateType == 1">
+      and orderTime &gt;= #{startTime} and orderTime &lt;= #{endTime}
+    </if>
+    <if test="queryDateType != 1">
+      and applyDate &gt;= #{startTime} and applyDate &lt;= #{endTime}
+    </if>
+  </select>
+
+  <select id="getOrderDetailInfoService"
+          resultType="com.cxf.entity.webService.ResponseQueryOrderInfo"
+          parameterType="com.cxf.entity.webService.RequestQueryOrderInfo">
+    select * from getOrderDetailInfoService where orderId=#{orderId}
+  </select>
+
+  <select id="getResourceOutPatInfoService"
+          resultType="com.cxf.entity.webService.ResponseDeptInfo"
+          parameterType="com.cxf.entity.webService.RequestDeptInfo">
+    select * from getResourceOutPatInfoService
+    where 1=1
+      and hosOrgCode=#{hosOrgCode}
+      <if test="oneDeptCode != ''">
+        and oneDeptCode = #{oneDeptCode}
+      </if>
+      <if test="deptCode != ''">
+        and deptCode = #{deptCode}
+      </if>
+  </select>
+
+  <select id="getResourceDoctInfoService"
+          resultType="com.cxf.entity.webService.ResponseDoctorInfo"
+          parameterType="com.cxf.entity.webService.RequestDeptInfo">
+    select * from UpDoctInfoService
+      where 1=1
+      and hosOrgCode=#{hosOrgCode}
+      <if test="oneDeptCode != ''">
+        and oneDeptCode = #{oneDeptCode}
+      </if>
+      <if test="deptCode != ''">
+        and deptCode = #{deptCode}
+      </if>
+  </select>
+
+</mapper>

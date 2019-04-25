@@ -1,0 +1,33 @@
+#此文件是配置上传需要的医疗机构信息
+MessageHeader:
+  #医疗机构签名
+  accessAccount: JA_JASSQ
+  #医疗机构签名
+  sign: JA_JASSQ
+#医疗机构信息[详见PDF文件]
+HosInfo:
+  hosOrgCode: 42484500700
+  orgCode: 42484500731010612B1001
+  hosName: 静安寺社区卫生服务中心
+  hospitalAdd: 上海市静安区新闸路1729号
+  hospitalRule:
+  hospitalWeb:
+  trafficGuide:
+  hospitalDesc:
+  hospitalTel:
+  hospitalGrade: 1
+  hospitalLevel: 1
+  hospitalType: 1
+  payMode: 3
+  orderMode: 2
+  isRegister: 0
+  isSpTime:
+  shortName: 静安寺社区卫生服务中心
+  orgSort: 2
+  hospitalArea:
+  hospitalImage: img/1.jpg
+
+
+
+
+
